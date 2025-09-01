@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>JP Residency — Registration</title>
+<style>
+  :root{
+    --accent:#ffd166; --accent-2:#06d6a0; --card-bg: rgba(255,255,255,0.06);
+    --muted:#dfeef2;
+  }
+  html,body{height:100%; margin:0; font-family:Inter,Arial,Helvetica,sans-serif; color:#fff;}
+  body{
+    background: radial-gradient(circle at 10% 20%, #0f1724 0%, transparent 25%),
+                linear-gradient(135deg,#08121a 0%, #0b2a3a 40%, #102a43 100%);
+    display:flex; justify-content:center; align-items:flex-start; padding:28px;
+  }
+  .frame{ width:100%; max-width:1080px; }
+  header{ text-align:center; font-weight:900; letter-spacing:0.6px; margin-bottom:14px; font-size:20px; }
+  .card{ background:var(--card-bg); border-radius:12px; padding:16px; margin-bottom:14px; border:1px solid rgba(255,255,255,0.04); }
+  .page{ display:none; }
+  .active{ display:block; }
+  label{ display:block; margin-top:8px; font-weight:700; color:var(--muted); }
+  input, select, textarea, button{ width:100%; padding:10px; margin-top:6px; border-radius:8px; border:none; font-size:14px; }
+  input, select, textarea{ background:#fff; color:#000; }
+  textarea{ min-height:80px; resize:vertical; }
+  button{ background:var(--accent); color:#000; font-weight:800; cursor:pointer; }
+  button:hover{ filter:brightness(.95); }
+  .controls{ display:flex; gap:10px; flex-wrap:wrap; }
+  .grid{ display:grid; gap:12px; }
+  .cols-2{ grid-template-columns: 1fr 1fr; }
+  @media(max-width:800px){ .cols-2{ grid-template-columns:1fr; } .controls{flex-direction:column;} }
+  table{ width:100%; border-collapse:collapse; margin-top:12px; background:#fff; color:#000; border-radius:8px; overflow:hidden; }
+  th,td{ border:1px solid #ddd; padding:8px; text-align:center; }
+  .img-thumb{ max-width:240px; border-radius:8px; margin-top:8px; display:block; }
+  .small{ font-size:13px; color:var(--muted); }
+  .center{text-align:center;}
+  .hidden{ display:none; }
+  .user-card{ background:#fff; color:#000; padding:10px; border-radius:8px; margin-bottom:8px; }
+  footer{ text-align:center; color:var(--muted); margin-top:12px; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="frame">
+  <header>JP RESIDENCY — GUEST REGISTRATION & BOOKING FORM</header>
+
+  <!-- HOME -->
+  <div id="home" class="page active card">
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button onclick="navigate('newReg')">New Registration</button>
+      <button onclick="navigate('already')">Already Registered</button>
+      <button onclick="navigate('owner')">Owner Login</button>
+    </div>
+    <p class="small center" style="margin-top:10px;">Owner password is confidential (AMS). Use Owner Login only if you are owner.</p>
+  </div>
+
+  <!-- NEW REGISTRATION -->
+  <div id="newReg" class="page card">
+    <h3 class="center">New Registration</h3>
+    <form id="registrationForm" onsubmit="return false;">
+      <fieldset class="card"><legend class="small">Personal Information</legend>
+        <div class="grid cols-2">
+          <label>Full Name <input id="fullName" required></label>
+          <label>Gender <select id="gender"><option>Male</option><option>Female</option><option>Other</option></select></label>
+        </div>
+        <div class="grid cols-2">
+          <label>Phone Number <input id="phone" ></label>
+          <label>Email ID <input id="email" type="email"></label>
+        </div>
+        <label>Address <textarea id="address"></textarea></label>
+        <div class="grid cols-2">
+          <label>ID Type <select id="idType"><option>Aadhar Card</option><option>PAN Card</option><option>Passport</option><option>Driving Licence</option></select></label>
+          <label>ID Number <input id="idNumber" required></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="card"><legend class="small">Room Details</legend>
+        <div class="grid cols-2">
+          <label>Date of Living <input id="dateOfLiving" type="date"></label>
+          <label>No. of Guests <select id="guests"><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="card"><legend class="small">Payment Details</legend>
+        <div class="grid cols-2">
+          <label>Room Rent per Month (₹) <input id="rent" required></label>
+          <label>Advance Paid (₹) <input id="advance" required></label>
+        </div>
+        <label>Previous Electric Meter Reading <input id="meter" required></label>
+      </fieldset>
+
+      <fieldset class="card"><legend class="small">Uploads (required)</legend>
+        <div class="grid cols-2">
+          <label>Upload Aadhaar Card Image <input id="aadhaarImg" type="file" accept="image/*" required></label>
+          <label>Upload Signature Image <input id="signatureImg" type="file" accept="image/*" required></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="card"><legend class="small">Set Password</legend>
+        <label>Create Password <input id="passwordSet" type="password" required></label>
+      </fieldset>
+
+      <div id="regStatus" class="small"></div>
+      <div class="controls" style="margin-top:10px;">
+        <button id="submitBtn" onclick="handleSubmit()">Submit Details</button>
+        <button type="button" onclick="navigate('home')">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- REG CONFIRM -->
+  <div id="regConfirm" class="page card">
+    <h3 id="welcomeMsg" class="center"></h3>
+    <p class="center small">YOUR REGISTRATION NUMBER IS <strong id="regCode" style="font-size:20px;"></strong></p>
+    <div class="controls" style="justify-content:center;">
+      <button onclick="sendToOwner()">Send Details to Owner (WhatsApp)</button>
+      <button onclick="navigate('home')">Finish</button>
+    </div>
+  </div>
+
+  <!-- ALREADY REGISTERED -->
+  <div id="already" class="page card">
+    <h3 class="center">Already Registered</h3>
+    <div class="grid cols-2">
+      <label>Registration Number <input id="loginReg"></label>
+      <label>Password <input id="loginPwd" type="password" placeholder="user password or owner AMS"></label>
+    </div>
+    <div class="controls" style="margin-top:10px;">
+      <button onclick="handleLogin()">Login</button>
+      <button onclick="navigate('home')">Back</button>
+    </div>
+
+    <div id="userPanel" class="hidden card" style="margin-top:12px;">
+      <h4>User Details</h4>
+      <div id="userInfo"></div>
+
+      <h4 style="margin-top:10px;">Monthly Payments</h4>
+      <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
+        <label style="width:220px;">Select Year
+          <select id="yearSelect"></select>
+        </label>
+        <label style="width:160px;"><input id="addYear" placeholder="Add year, e.g. 2026"></label>
+        <button onclick="addNewYear()">Add Year</button>
+      </div>
+
+      <table id="paymentsTable" class="table">
+        <thead><tr><th>Month</th><th>Rent (₹)</th><th>Paid / Not Paid</th></tr></thead>
+        <tbody></tbody>
+      </table>
+
+      <div class="controls" style="margin-top:12px;">
+        <button id="saveBtn" class="hidden" onclick="savePayments()">Update Changes</button>
+        <button onclick="logoutToHome()">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OWNER LOGIN -->
+  <div id="owner" class="page card">
+    <h3 class="center">Owner Login</h3>
+    <label>Owner Password <input id="ownerPwd" type="password" placeholder="Enter owner password (AMS)"></label>
+    <div class="controls" style="margin-top:8px;">
+      <button onclick="ownerLogin()">Login</button>
+      <button onclick="navigate('home')">Back</button>
+    </div>
+
+    <div id="ownerPanel" class="hidden card" style="margin-top:12px;">
+      <h4>All Registered Users</h4>
+      <div id="usersList"></div>
+    </div>
+  </div>
+
+  <footer class="small center">JP Residency — guest registration system</footer>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getDatabase, ref, get, child, set, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+  import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+  // ==== Your Firebase config (provided) ====
+  const firebaseConfig = {
+    apiKey: "AIzaSyB-e_jlc5bQHfoGZj75oHh-3Pf6YfP4dl4",
+    authDomain: "jp-residency-7c40a.firebaseapp.com",
+    databaseURL: "https://jp-residency-7c40a-default-rtdb.firebaseio.com",
+    projectId: "jp-residency-7c40a",
+    storageBucket: "jp-residency-7c40a.appspot.com",
+    messagingSenderId: "509355957860",
+    appId: "1:509355957860:web:aa4b3353966dd39f62c971"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const storage = getStorage(app);
+
+  // state
+  let CURRENT_REG = null;
+  let CURRENT_USER = null;
+  let OWNER_MODE = false;
+
+  // helper: navigate pages
+  function navigate(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if(id !== 'already') document.getElementById('userPanel').classList.add('hidden');
+    if(id !== 'owner') document.getElementById('ownerPanel').classList.add('hidden');
+  }
+  window.navigate = navigate;
+
+  // months
+  function months(){ return ['January','February','March','April','May','June','July','August','September','October','November','December']; }
+
+  // init year select 2020..2025 + current
+  function initYears(){
+    const sel = document.getElementById('yearSelect'); sel.innerHTML='';
+    for(let y=2020;y<=2025;y++){ const o=document.createElement('option'); o.value=o.textContent=y; sel.appendChild(o); }
+    const cy = new Date().getFullYear();
+    if(cy>2025){ const o=document.createElement('option'); o.value=o.textContent=cy; sel.appendChild(o); }
+    sel.value = (cy<=2025?cy:cy);
+  }
+  initYears();
+
+  window.addNewYear = () => {
+    const v = Number(document.getElementById('addYear').value);
+    if(!v || v < 2000){ alert('Enter valid year'); return; }
+    const sel = document.getElementById('yearSelect');
+    for(const o of sel.options) if(Number(o.value)===v){ sel.value=v; document.getElementById('addYear').value=''; return; }
+    const opt=document.createElement('option'); opt.value=opt.textContent=v; sel.appendChild(opt); sel.value=v; document.getElementById('addYear').value='';
+    if(CURRENT_USER) buildPayments(CURRENT_USER, sel.value, OWNER_MODE);
+  };
+
+  // check duplicate idNumber
+  async function duplicateId(idNumber){
+    if(!idNumber) return false;
+    try{
+      const snap = await get(child(ref(db), 'users'));
+      if(!snap.exists()) return false;
+      const users = snap.val();
+      for(const r in users) if(users[r].idNumber && users[r].idNumber.toString().trim() === idNumber.toString().trim()) return true;
+      return false;
+    }catch(e){ console.error(e); return false; }
+  }
+
+  // generate unique 4-digit
+  async function gen4(){
+    while(true){
+      const n = Math.floor(1000 + Math.random()*9000).toString();
+      const snap = await get(child(ref(db), `users/${n}`));
+      if(!snap.exists()) return n;
+    }
+  }
+
+  // upload file and get URL
+  async function uploadFile(reg, name, file){
+    const r = sRef(storage, `users/${reg}/${name}`);
+    await uploadBytes(r, file);
+    return await getDownloadURL(r);
+  }
+
+  // ---------- Submit registration ----------
+  async function handleSubmit(){
+    const btn = document.getElementById('submitBtn');
+    const status = document.getElementById('regStatus');
+    try{
+      btn.disabled=true; status.textContent='Submitting... please wait';
+      // collect
+      const fullName = (document.getElementById('fullName').value||'').trim();
+      const gender = document.getElementById('gender').value;
+      const phone = (document.getElementById('phone').value||'').trim();
+      const email = (document.getElementById('email').value||'').trim();
+      const address = (document.getElementById('address').value||'').trim();
+      const idType = document.getElementById('idType').value;
+      const idNumber = (document.getElementById('idNumber').value||'').trim();
+      const dateOfLiving = document.getElementById('dateOfLiving').value||'';
+      const guests = document.getElementById('guests').value;
+      const rent = (document.getElementById('rent').value||'').trim();
+      const advance = (document.getElementById('advance').value||'').trim();
+      const meter = (document.getElementById('meter').value||'').trim();
+      const pwd = (document.getElementById('passwordSet').value||'').trim();
+
+      const aadFile = document.getElementById('aadhaarImg').files[0];
+      const sigFile = document.getElementById('signatureImg').files[0];
+      if(!aadFile || !sigFile){ alert('Please upload Aadhaar and Signature images'); btn.disabled=false; status.textContent=''; return; }
+
+      // duplicate check
+      if(await duplicateId(idNumber)){ alert('You have already registered with this ID number'); btn.disabled=false; status.textContent=''; return; }
+
+      const reg = await gen4(); CURRENT_REG = reg;
+
+      // upload images
+      const aadURL = await uploadFile(reg, 'aadhaar', aadFile);
+      const sigURL = await uploadFile(reg, 'signature', sigFile);
+
+      // paymentsStatus default for existing selector years
+      const paymentsStatus = {};
+      const sel = document.getElementById('yearSelect');
+      for(const o of sel.options) paymentsStatus[o.value] = Array(12).fill('Not Paid');
+
+      // write to DB
+      await set(ref(db, `users/${reg}`), {
+        fullName, gender, phone, email, address,
+        idType, idNumber, dateOfLiving, guests, rent, advance, meter,
+        aadhaarURL: aadURL, signatureURL: sigURL,
+        paymentsStatus, password: pwd
+      });
+
+      // success
+      document.getElementById('welcomeMsg').textContent = `WELCOME MR. ${fullName.toUpperCase()} TO JP RESIDENCY`;
+      document.getElementById('regCode').textContent = reg;
+      document.getElementById('registrationForm').reset();
+      navigate('regConfirm');
+
+    }catch(err){
+      console.error('register err', err);
+      if(err && err.code && err.code.includes('permission-denied')){
+        alert('Firebase permission denied. Check DB/Storage rules.');
+      } else {
+        alert('Error: ' + (err.message || err));
+      }
+    } finally {
+      btn.disabled=false; status.textContent='';
+    }
+  }
+  window.handleSubmit = handleSubmit;
+
+  // whatsapp send
+  function sendToOwner(){
+    if(!CURRENT_REG) return alert('No registration to send');
+    const nm = document.getElementById('fullName').value || '';
+    const ph = document.getElementById('phone').value || '';
+    const msg = encodeURIComponent(`JP Residency New Reg\nReg: ${CURRENT_REG}\nName: ${nm}\nPhone: ${ph}`);
+    window.open(`https://wa.me/9942823314?text=${msg}`,'_blank');
+  }
+  window.sendToOwner = sendToOwner;
+
+  // ---------- Already Registered login ----------
+  async function handleLogin(){
+    try{
+      const reg = (document.getElementById('loginReg').value||'').trim();
+      const pwd = (document.getElementById('loginPwd').value||'').trim();
+      if(!reg || !pwd) return alert('Enter registration number and password');
+      const snap = await get(child(ref(db), `users/${reg}`));
+      if(!snap.exists()) return alert('Registration not found');
+      const user = snap.val(); CURRENT_REG = reg; CURRENT_USER = user;
+      if(pwd === user.password){
+        OWNER_MODE = false; openUser(user, false);
+      } else if(pwd === 'AMS'){
+        OWNER_MODE = true; openUser(user, true);
+      } else { alert('Incorrect password'); }
+    }catch(e){ console.error(e); alert('Login failed: '+(e.message||e)); }
+  }
+  window.handleLogin = handleLogin;
+
+  // build payments table
+  function buildPayments(userObj, year, editable){
+    const tbody = document.querySelector('#paymentsTable tbody'); tbody.innerHTML='';
+    const m = months(); const arr = (userObj.paymentsStatus && userObj.paymentsStatus[year]) ? userObj.paymentsStatus[year] : Array(12).fill('Not Paid');
+    m.forEach((mn,i)=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${mn} ${year}</td><td>${userObj.rent||''}</td><td contenteditable="${editable}" data-idx="${i}">${arr[i]||'Not Paid'}</td>`;
+      tbody.appendChild(tr);
+    });
+    document.getElementById('saveBtn').classList.toggle('hidden', !editable);
+  }
+
+  // open user data panel
+  function openUser(userObj, ownerMode){
+    OWNER_MODE = ownerMode;
+    document.getElementById('userPanel').classList.remove('hidden');
+    const ui = document.getElementById('userInfo');
+    ui.innerHTML = `
+      <p><strong>FULL NAME:</strong> ${ (userObj.fullName||'').toUpperCase() }</p>
+      <p><strong>GENDER:</strong> ${userObj.gender||''}</p>
+      <p><strong>PHONE:</strong> ${userObj.phone||''}</p>
+      <p><strong>EMAIL:</strong> ${userObj.email||''}</p>
+      <p><strong>ADDRESS:</strong> ${(userObj.address||'').toUpperCase()}</p>
+      <p><strong>ID TYPE:</strong> ${userObj.idType||''}</p>
+      <p><strong>ID NUMBER:</strong> ${(userObj.idNumber||'').toUpperCase()}</p>
+      <p><strong>DATE OF LIVING:</strong> ${userObj.dateOfLiving||''}</p>
+      <p><strong>NO. OF GUESTS:</strong> ${userObj.guests||''}</p>
+      <p><strong>RENT/MONTH:</strong> ${userObj.rent||''}</p>
+      <p><strong>ADVANCE:</strong> ${userObj.advance||''}</p>
+      <p><strong>PREV METER:</strong> ${userObj.meter||''}</p>
+      <p><strong>AADHAAR IMAGE:</strong><br>${userObj.aadhaarURL ? `<img src="${userObj.aadhaarURL}" class="img-thumb">` : 'Not uploaded'}</p>
+      <p><strong>SIGNATURE IMAGE:</strong><br>${userObj.signatureURL ? `<img src="${userObj.signatureURL}" class="img-thumb">` : 'Not uploaded'}</p>
+    `;
+    // ensure years present in selector
+    const sel = document.getElementById('yearSelect');
+    if(userObj.paymentsStatus){
+      for(const y in userObj.paymentsStatus){
+        let found=false; for(const o of sel.options) if(o.value==y) found=true;
+        if(!found){ const op=document.createElement('option'); op.value=op.textContent=y; sel.appendChild(op); }
+      }
+    }
+    buildPayments(userObj, sel.value, ownerMode);
+    navigate('already');
+  }
+
+  // save payments (owner)
+  async function savePayments(){
+    try{
+      if(!CURRENT_REG) return alert('No user selected');
+      const year = document.getElementById('yearSelect').value;
+      const rows = Array.from(document.querySelectorAll('#paymentsTable tbody tr'));
+      const statuses = rows.map(r=> (r.cells[2].innerText||'Not Paid').trim());
+      const snap = await get(child(ref(db), `users/${CURRENT_REG}`));
+      if(!snap.exists()) return alert('User not in DB');
+      const userObj = snap.val(); const payments = userObj.paymentsStatus || {};
+      payments[year] = statuses;
+      await update(ref(db, `users/${CURRENT_REG}`), { paymentsStatus: payments });
+      alert('Payments updated for '+CURRENT_REG);
+      CURRENT_USER = Object.assign({}, userObj, { paymentsStatus: payments });
+      buildPayments(CURRENT_USER, year, true);
+    }catch(e){ console.error(e); alert('Save failed: '+(e.message||e)); }
+  }
+  window.savePayments = savePayments;
+
+  // logout to home
+  function logoutToHome(){ CURRENT_REG=null; CURRENT_USER=null; OWNER_MODE=false; document.getElementById('userPanel').classList.add('hidden'); navigate('home'); }
+  window.logoutToHome = logoutToHome;
+
+  // ---------- Owner Login ----------
+  async function ownerLogin(){
+    try{
+      const pass = (document.getElementById('ownerPwd').value||'').trim();
+      if(pass !== 'AMS'){ alert('Incorrect owner password'); return; }
+      const snap = await get(child(ref(db), 'users'));
+      const list = document.getElementById('usersList'); list.innerHTML='';
+      if(!snap.exists()){ list.innerHTML='<p class="small">No users</p>'; document.getElementById('ownerPanel').classList.remove('hidden'); navigate('owner'); return; }
+      const users = snap.val();
+      Object.keys(users).sort().forEach(reg=>{
+        const u = users[reg];
+        const div = document.createElement('div'); div.className='user-card';
+        div.innerHTML = `<strong>${(u.fullName||'').toUpperCase()}</strong> — Reg: ${reg}<br><button onclick="openAsOwner('${reg}')">Open / Edit</button>`;
+        list.appendChild(div);
+      });
+      document.getElementById('ownerPanel').classList.remove('hidden'); navigate('owner');
+    }catch(e){ console.error(e); alert('Owner list failed: '+(e.message||e)); }
+  }
+  window.ownerLogin = ownerLogin;
+
+  async function openAsOwner(reg){
+    try{
+      const snap = await get(child(ref(db), `users/${reg}`));
+      if(!snap.exists()) return alert('Not found');
+      const u = snap.val(); CURRENT_REG=reg; CURRENT_USER=u; openUser(u, true);
+    }catch(e){ console.error(e); alert('Open failed: '+(e.message||e)); }
+  }
+  window.openAsOwner = openAsOwner;
+
+  // year selector change
+  document.getElementById('yearSelect').addEventListener('change',()=>{
+    if(!CURRENT_USER) return;
+    buildPayments(CURRENT_USER, document.getElementById('yearSelect').value, OWNER_MODE);
+  });
+
+  // expose functions needed
+  window.handleSubmit = handleSubmit;
+  window.handleLogin = handleLogin;
+
+  // initial
+  navigate('home');
+</script>
+</body>
+</html>
