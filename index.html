@@ -2,116 +2,132 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>JARVIS AI ACCESS</title>
+<title>Hacker Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:"Courier New", monospace;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family: 'Courier New', monospace;}
 body{
-  background:black;
-  color:#00f6ff;
-  overflow:hidden;
+    background:black;
+    color:#00ff99;
+    overflow:hidden;
 }
 
-/* ---------- COMMON ---------- */
-.center{
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-input{
-  padding:15px;
-  width:260px;
-  background:black;
-  border:2px solid #00f6ff;
-  color:#00f6ff;
-  font-size:1.1rem;
-  text-align:center;
-}
-h1{
-  margin-bottom:20px;
-  text-shadow:0 0 20px #00f6ff;
+/* ---------- PAGE 1 ---------- */
+#login{
+    position:fixed;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:black;
+    z-index:10;
 }
 
-/* ---------- WARNING ---------- */
+#login h1{
+    color:#00ff99;
+    margin-bottom:20px;
+    letter-spacing:3px;
+}
+
+#nameInput{
+    padding:15px;
+    width:260px;
+    font-size:20px;
+    background:black;
+    border:2px solid #00ff99;
+    color:#00ff99;
+    text-align:center;
+    outline:none;
+}
+
 #warning{
-  display:none;
-  background:red;
-  color:white;
-  animation:shake 0.4s infinite;
+    margin-top:20px;
+    font-size:18px;
+    color:red;
+    text-shadow:0 0 10px red;
+    animation:shake .3s infinite alternate;
 }
+
 @keyframes shake{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-10px)}
-  50%{transform:translateX(10px)}
-  75%{transform:translateX(-10px)}
-  100%{transform:translateX(0)}
+    from{transform:translateX(-3px);}
+    to{transform:translateX(3px);}
 }
 
-/* ---------- AI PAGE ---------- */
-#aiPage{
-  display:none;
-}
-.grid{
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(#00f6ff22 1px, transparent 1px),
-    linear-gradient(90deg,#00f6ff22 1px, transparent 1px);
-  background-size:40px 40px;
-  z-index:-1;
+/* ---------- PAGE 2 ---------- */
+#system{
+    display:none;
+    position:fixed;
+    inset:0;
 }
 
-/* AI CORE */
-#core{
-  position:absolute;
-  top:30%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:180px;
-  height:180px;
-  border-radius:50%;
-  border:3px solid #00f6ff;
-  box-shadow:0 0 50px #00f6ff;
-  animation:spin 6s linear infinite;
+/* MATRIX */
+canvas{
+    position:absolute;
+    inset:0;
 }
+
+/* HUD */
+.hud{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+}
+
+.circle{
+    position:absolute;
+    width:300px;
+    height:300px;
+    border:2px solid #00ff99;
+    border-radius:50%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    animation:spin 6s linear infinite;
+}
+
+.circle::after{
+    content:'';
+    position:absolute;
+    inset:20px;
+    border:2px dashed #00ff99;
+    border-radius:50%;
+}
+
 @keyframes spin{
-  from{transform:translate(-50%,-50%) rotate(0deg)}
-  to{transform:translate(-50%,-50%) rotate(360deg)}
+    from{transform:translate(-50%,-50%) rotate(0deg);}
+    to{transform:translate(-50%,-50%) rotate(360deg);}
 }
 
-/* TERMINAL */
-#terminal{
-  position:absolute;
-  bottom:30px;
-  left:50%;
-  transform:translateX(-50%);
-  width:90%;
-  max-width:900px;
-  height:260px;
-  border:2px solid #00f6ff;
-  padding:15px;
-  background:rgba(0,0,0,0.85);
+/* CONSOLE */
+#console{
+    position:absolute;
+    bottom:20px;
+    left:20px;
+    width:90%;
+    max-width:500px;
+    height:180px;
+    border:2px solid #00ff99;
+    padding:10px;
+    background:rgba(0,0,0,0.6);
+    overflow:hidden;
+    font-size:14px;
 }
-#output{
-  white-space:pre-wrap;
-  font-size:1rem;
+
+/* SCAN LINE */
+.scan{
+    position:absolute;
+    width:100%;
+    height:3px;
+    background:#00ff99;
+    top:-10px;
+    animation:scan 3s linear infinite;
 }
-#cmd{
-  width:100%;
-  background:black;
-  border:none;
-  color:#00f6ff;
-  font-size:1rem;
-  outline:none;
+
+@keyframes scan{
+    from{top:-10px;}
+    to{top:100%;}
 }
 </style>
 </head>
@@ -119,115 +135,121 @@ h1{
 <body>
 
 <!-- PAGE 1 -->
-<div id="login" class="center">
-  <h1>SECURE AI SYSTEM</h1>
-  <input id="nameInput" placeholder="ENTER NAME">
-</div>
-
-<!-- WARNING -->
-<div id="warning" class="center">
-  <h1>⚠ ACCESS DENIED ⚠</h1>
-  <p id="attemptText">2 ATTEMPTS LEFT</p>
+<div id="login">
+    <h1>SECURE ACCESS</h1>
+    <input id="nameInput" placeholder="ENTER NAME" autofocus>
+    <div id="warning"></div>
 </div>
 
 <!-- PAGE 2 -->
-<div id="aiPage">
-  <div class="grid"></div>
-  <div id="core"></div>
+<div id="system">
+    <canvas id="matrix"></canvas>
 
-  <div id="terminal">
-    <div id="output"></div>
-    <input id="cmd" placeholder="> type command and press enter">
-  </div>
+    <div class="hud">
+        <div class="circle"></div>
+        <div class="scan"></div>
+    </div>
+
+    <div id="console"></div>
 </div>
 
-<!-- AUDIO -->
-<audio id="hum" loop src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-hum-2135.mp3"></audio>
-<audio id="music" loop src="https://assets.mixkit.co/music/preview/mixkit-cyberpunk-ambient-2161.mp3"></audio>
-
 <script>
+/* ---------- LOGIN LOGIC ---------- */
 let attempts = 2;
-const correctName = "AAYUSHMAN";
 
-const logs = [
-  "Initializing JARVIS AI...",
-  "Scanning identity...",
-  "Access granted.",
-  "Loading neural network...",
-  "System online.",
-  "Welcome back AAYUSHMAN."
-];
-
-/* VOICE */
-function speak(text){
-  const msg = new SpeechSynthesisUtterance(text);
-  msg.rate = 0.75;
-  msg.pitch = 0.5;
-  msg.volume = 1;
-  speechSynthesis.speak(msg);
-}
-
-/* TERMINAL TYPING */
-function startTerminal(){
-  let i = 0;
-  const out = document.getElementById("output");
-
-  function type(){
-    if(i < logs.length){
-      out.innerHTML += logs[i++] + "\n";
-      setTimeout(type, 500);
-    }
-  }
-  type();
-}
-
-/* ENTER KEY */
 document.getElementById("nameInput").addEventListener("keydown", e=>{
-  if(e.key === "Enter"){
-    checkAccess();
-  }
+    if(e.key==="Enter"){
+        const name = e.target.value.trim().toUpperCase();
+        if(name==="AAYUSHMAN"){
+            document.getElementById("login").style.display="none";
+            document.getElementById("system").style.display="block";
+            startMatrix();
+            startConsole();
+            startVoice();
+            startMusic();
+        }else{
+            attempts--;
+            document.getElementById("warning").innerHTML =
+              "⚠ ACCESS DENIED<br>"+attempts+" ATTEMPTS LEFT";
+            if(attempts<=0){
+                document.getElementById("warning").innerHTML="SYSTEM LOCKED";
+            }
+        }
+    }
 });
 
-function checkAccess(){
-  const val = nameInput.value.trim().toUpperCase();
+/* ---------- MATRIX ---------- */
+function startMatrix(){
+    const c=document.getElementById("matrix");
+    const ctx=c.getContext("2d");
+    c.width=innerWidth;
+    c.height=innerHeight;
+    const letters="1010101010ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const font=16;
+    const cols=c.width/font;
+    const drops=Array(Math.floor(cols)).fill(1);
 
-  if(val === correctName){
-    login.style.display = "none";
-    warning.style.display = "none";
-    aiPage.style.display = "block";
-
-    hum.volume = 0.3;
-    music.volume = 0.25;
-    hum.play();
-    music.play();
-
-    speak("WELCOME BACK AAYUSHMAN. LET'S COMPLETE THE WORK.");
-    startTerminal();
-  }else{
-    attempts--;
-    login.style.display = "none";
-    warning.style.display = "flex";
-    attemptText.innerText = attempts + " ATTEMPTS LEFT";
-
-    if(attempts > 0){
-      setTimeout(()=>{
-        warning.style.display = "none";
-        login.style.display = "flex";
-        nameInput.value = "";
-      },2000);
-    }else{
-      attemptText.innerText = "SYSTEM LOCKED";
-    }
-  }
+    setInterval(()=>{
+        ctx.fillStyle="rgba(0,0,0,0.1)";
+        ctx.fillRect(0,0,c.width,c.height);
+        ctx.fillStyle="#00ff99";
+        ctx.font=font+"px monospace";
+        for(let i=0;i<drops.length;i++){
+            const text=letters[Math.floor(Math.random()*letters.length)];
+            ctx.fillText(text,i*font,drops[i]*font);
+            if(drops[i]*font>c.height && Math.random()>0.975) drops[i]=0;
+            drops[i]++;
+        }
+    },33);
 }
 
-/* TERMINAL COMMAND INPUT */
-cmd.addEventListener("keydown", e=>{
-  if(e.key === "Enter"){
-    output.innerHTML += "> " + cmd.value + "\n";
-    cmd.value = "";
-  }
-});
+/* ---------- CONSOLE TYPING ---------- */
+function startConsole(){
+    const box=document.getElementById("console");
+    const lines=[
+        "Initializing AI core...",
+        "Decrypting secure layers...",
+        "Neural interface online...",
+        "System authenticated.",
+        "Welcome back AAYUSHMAN.",
+        "Let's complete the work."
+    ];
+    let i=0,j=0;
+    setInterval(()=>{
+        if(i<lines.length){
+            if(j<lines[i].length){
+                box.innerHTML+=lines[i][j++];
+            }else{
+                box.innerHTML+="<br>";
+                i++;j=0;
+            }
+            box.scrollTop=box.scrollHeight;
+        }
+    },40);
+}
+
+/* ---------- JARVIS VOICE ---------- */
+function startVoice(){
+    const msg=new SpeechSynthesisUtterance(
+      "Welcome back Aayushman. Let's complete the work."
+    );
+    msg.rate=1.3;      // faster robotic
+    msg.pitch=0.6;     // deep AI
+    msg.lang="en-US";
+    speechSynthesis.speak(msg);
+}
+
+/* ---------- BACKGROUND MUSIC ---------- */
+function startMusic(){
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+    osc.type="sawtooth";
+    osc.frequency.value=60;
+    gain.gain.value=0.05;
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+}
 </script>
 
 </body>
