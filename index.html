@@ -2,217 +2,231 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AI Access System</title>
+<title>JARVIS AI ACCESS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ===== GLOBAL ===== */
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: 'Courier New', monospace;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Courier New", monospace;
 }
 body{
-    background:black;
-    overflow:hidden;
-    color:#0f0;
+  background:black;
+  color:#00f6ff;
+  overflow:hidden;
 }
 
-/* ===== PAGE 1 ===== */
-#loginPage{
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    text-align:center;
+/* ---------- COMMON ---------- */
+.center{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
-#loginPage h1{
-    font-size:2.5rem;
-    margin-bottom:20px;
-    text-shadow:0 0 20px #0f0;
+input{
+  padding:15px;
+  width:260px;
+  background:black;
+  border:2px solid #00f6ff;
+  color:#00f6ff;
+  font-size:1.1rem;
+  text-align:center;
 }
-#nameInput{
-    padding:15px;
-    font-size:1.2rem;
-    width:280px;
-    text-align:center;
-    border:2px solid #0f0;
-    background:black;
-    color:#0f0;
-    outline:none;
-}
-#enterBtn{
-    margin-top:20px;
-    padding:12px 40px;
-    font-size:1.1rem;
-    border:none;
-    cursor:pointer;
-    background:#0f0;
-    color:black;
+h1{
+  margin-bottom:20px;
+  text-shadow:0 0 20px #00f6ff;
 }
 
-/* ===== WARNING PAGE ===== */
-#warningPage{
-    display:none;
-    height:100vh;
-    background:red;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    animation:shake 0.5s infinite;
+/* ---------- WARNING ---------- */
+#warning{
+  display:none;
+  background:red;
+  color:white;
+  animation:shake 0.4s infinite;
 }
 @keyframes shake{
-    0%{transform:translateX(0)}
-    25%{transform:translateX(-10px)}
-    50%{transform:translateX(10px)}
-    75%{transform:translateX(-10px)}
-    100%{transform:translateX(0)}
-}
-#warningPage h1{
-    font-size:3rem;
-}
-#attempts{
-    margin-top:15px;
-    font-size:1.5rem;
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-10px)}
+  50%{transform:translateX(10px)}
+  75%{transform:translateX(-10px)}
+  100%{transform:translateX(0)}
 }
 
-/* ===== AI PAGE ===== */
+/* ---------- AI PAGE ---------- */
 #aiPage{
-    display:none;
-    height:100vh;
-    background:radial-gradient(circle at center, #001, #000);
-    color:#0ff;
-    perspective:1000px;
+  display:none;
 }
-#aiContainer{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%) rotateX(15deg);
-    text-align:center;
-}
-#aiTitle{
-    font-size:3rem;
-    text-shadow:0 0 30px #0ff;
-    animation:pulse 2s infinite;
-}
-@keyframes pulse{
-    0%{text-shadow:0 0 10px #0ff}
-    50%{text-shadow:0 0 40px #0ff}
-    100%{text-shadow:0 0 10px #0ff}
+.grid{
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(#00f6ff22 1px, transparent 1px),
+    linear-gradient(90deg,#00f6ff22 1px, transparent 1px);
+  background-size:40px 40px;
+  z-index:-1;
 }
 
-/* MATRIX BACKGROUND */
-canvas{
-    position:fixed;
-    top:0;
-    left:0;
-    z-index:-1;
+/* AI CORE */
+#core{
+  position:absolute;
+  top:30%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  border:3px solid #00f6ff;
+  box-shadow:0 0 50px #00f6ff;
+  animation:spin 6s linear infinite;
+}
+@keyframes spin{
+  from{transform:translate(-50%,-50%) rotate(0deg)}
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+/* TERMINAL */
+#terminal{
+  position:absolute;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:900px;
+  height:260px;
+  border:2px solid #00f6ff;
+  padding:15px;
+  background:rgba(0,0,0,0.85);
+}
+#output{
+  white-space:pre-wrap;
+  font-size:1rem;
+}
+#cmd{
+  width:100%;
+  background:black;
+  border:none;
+  color:#00f6ff;
+  font-size:1rem;
+  outline:none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- MATRIX -->
-<canvas id="matrix"></canvas>
-
-<!-- LOGIN -->
-<div id="loginPage">
-    <h1>SECURE AI SYSTEM</h1>
-    <input id="nameInput" placeholder="ENTER YOUR NAME" autofocus>
-    <button id="enterBtn">ENTER</button>
+<!-- PAGE 1 -->
+<div id="login" class="center">
+  <h1>SECURE AI SYSTEM</h1>
+  <input id="nameInput" placeholder="ENTER NAME">
 </div>
 
 <!-- WARNING -->
-<div id="warningPage">
-    <h1>⚠ ACCESS DENIED ⚠</h1>
-    <div id="attempts">2 ATTEMPTS LEFT</div>
+<div id="warning" class="center">
+  <h1>⚠ ACCESS DENIED ⚠</h1>
+  <p id="attemptText">2 ATTEMPTS LEFT</p>
 </div>
 
-<!-- AI PAGE -->
+<!-- PAGE 2 -->
 <div id="aiPage">
-    <div id="aiContainer">
-        <div id="aiTitle">AI SYSTEM ONLINE</div>
-        <p style="margin-top:20px;font-size:1.3rem;">
-            WELCOME BACK AAYUSHMAN
-        </p>
-    </div>
+  <div class="grid"></div>
+  <div id="core"></div>
+
+  <div id="terminal">
+    <div id="output"></div>
+    <input id="cmd" placeholder="> type command and press enter">
+  </div>
 </div>
+
+<!-- AUDIO -->
+<audio id="hum" loop src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-hum-2135.mp3"></audio>
+<audio id="music" loop src="https://assets.mixkit.co/music/preview/mixkit-cyberpunk-ambient-2161.mp3"></audio>
 
 <script>
-/* ===== MATRIX EFFECT ===== */
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const letters = "01";
-const fontSize = 16;
-const columns = canvas.width / fontSize;
-const drops = Array(Math.floor(columns)).fill(1);
-
-function drawMatrix(){
-    ctx.fillStyle="rgba(0,0,0,0.05)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle="#0f0";
-    ctx.font=fontSize+"px monospace";
-    for(let i=0;i<drops.length;i++){
-        const text = letters[Math.floor(Math.random()*letters.length)];
-        ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-        if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
-            drops[i]=0;
-        }
-        drops[i]++;
-    }
-}
-setInterval(drawMatrix,50);
-
-/* ===== LOGIC ===== */
 let attempts = 2;
-const input = document.getElementById("nameInput");
+const correctName = "AAYUSHMAN";
 
+const logs = [
+  "Initializing JARVIS AI...",
+  "Scanning identity...",
+  "Access granted.",
+  "Loading neural network...",
+  "System online.",
+  "Welcome back AAYUSHMAN."
+];
+
+/* VOICE */
 function speak(text){
-    const msg = new SpeechSynthesisUtterance(text);
-    msg.rate = 0.9;
-    msg.pitch = 1;
-    speechSynthesis.speak(msg);
+  const msg = new SpeechSynthesisUtterance(text);
+  msg.rate = 0.75;
+  msg.pitch = 0.5;
+  msg.volume = 1;
+  speechSynthesis.speak(msg);
 }
 
-function checkName(){
-    const name = input.value.trim().toUpperCase();
+/* TERMINAL TYPING */
+function startTerminal(){
+  let i = 0;
+  const out = document.getElementById("output");
 
-    if(name === "AAYUSHMAN"){
-        document.getElementById("loginPage").style.display="none";
-        document.getElementById("warningPage").style.display="none";
-        document.getElementById("aiPage").style.display="block";
-        speak("WELCOME BACK AAYUSHMAN, LET'S COMPLETE THE WORK");
-    }else{
-        attempts--;
-        document.getElementById("loginPage").style.display="none";
-        document.getElementById("warningPage").style.display="flex";
-        document.getElementById("attempts").innerText =
-            attempts + " ATTEMPTS LEFT";
-
-        if(attempts<=0){
-            document.getElementById("attempts").innerText =
-            "SYSTEM LOCKED";
-        }else{
-            setTimeout(()=>{
-                document.getElementById("warningPage").style.display="none";
-                document.getElementById("loginPage").style.display="flex";
-                input.value="";
-            },2000);
-        }
+  function type(){
+    if(i < logs.length){
+      out.innerHTML += logs[i++] + "\n";
+      setTimeout(type, 500);
     }
+  }
+  type();
 }
 
-document.getElementById("enterBtn").onclick = checkName;
-input.addEventListener("keydown",e=>{
-    if(e.key==="Enter") checkName();
+/* ENTER KEY */
+document.getElementById("nameInput").addEventListener("keydown", e=>{
+  if(e.key === "Enter"){
+    checkAccess();
+  }
+});
+
+function checkAccess(){
+  const val = nameInput.value.trim().toUpperCase();
+
+  if(val === correctName){
+    login.style.display = "none";
+    warning.style.display = "none";
+    aiPage.style.display = "block";
+
+    hum.volume = 0.3;
+    music.volume = 0.25;
+    hum.play();
+    music.play();
+
+    speak("WELCOME BACK AAYUSHMAN. LET'S COMPLETE THE WORK.");
+    startTerminal();
+  }else{
+    attempts--;
+    login.style.display = "none";
+    warning.style.display = "flex";
+    attemptText.innerText = attempts + " ATTEMPTS LEFT";
+
+    if(attempts > 0){
+      setTimeout(()=>{
+        warning.style.display = "none";
+        login.style.display = "flex";
+        nameInput.value = "";
+      },2000);
+    }else{
+      attemptText.innerText = "SYSTEM LOCKED";
+    }
+  }
+}
+
+/* TERMINAL COMMAND INPUT */
+cmd.addEventListener("keydown", e=>{
+  if(e.key === "Enter"){
+    output.innerHTML += "> " + cmd.value + "\n";
+    cmd.value = "";
+  }
 });
 </script>
 
