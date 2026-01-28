@@ -2,255 +2,278 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Hacker Access</title>
+<title>Mahatma Gandhi – Soul of India</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family: 'Courier New', monospace;}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Georgia', serif;
+}
+
 body{
-    background:black;
-    color:#00ff99;
-    overflow:hidden;
+    overflow-x:hidden;
+    background:#000;
+    color:#fff;
 }
 
-/* ---------- PAGE 1 ---------- */
-#login{
+/* ---------- INTRO SCREEN ---------- */
+#intro{
     position:fixed;
     inset:0;
+    background:radial-gradient(circle,#000,#111,#000);
     display:flex;
-    flex-direction:column;
-    justify-content:center;
     align-items:center;
-    background:black;
-    z-index:10;
+    justify-content:center;
+    flex-direction:column;
+    z-index:9999;
+    animation:introFade 6s forwards;
 }
 
-#login h1{
-    color:#00ff99;
-    margin-bottom:20px;
-    letter-spacing:3px;
+@keyframes introFade{
+    0%{opacity:1;}
+    80%{opacity:1;}
+    100%{opacity:0; visibility:hidden;}
 }
 
-#nameInput{
-    padding:15px;
-    width:260px;
-    font-size:20px;
-    background:black;
-    border:2px solid #00ff99;
-    color:#00ff99;
-    text-align:center;
-    outline:none;
-}
-
-#warning{
-    margin-top:20px;
-    font-size:18px;
-    color:red;
-    text-shadow:0 0 10px red;
-    animation:shake .3s infinite alternate;
-}
-
-@keyframes shake{
-    from{transform:translateX(-3px);}
-    to{transform:translateX(3px);}
-}
-
-/* ---------- PAGE 2 ---------- */
-#system{
-    display:none;
-    position:fixed;
-    inset:0;
-}
-
-/* MATRIX */
-canvas{
-    position:absolute;
-    inset:0;
-}
-
-/* HUD */
-.hud{
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-}
-
-.circle{
-    position:absolute;
-    width:300px;
-    height:300px;
-    border:2px solid #00ff99;
+.chakra{
+    width:160px;
+    height:160px;
+    border:8px solid #0a3d91;
     border-radius:50%;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
+    position:relative;
     animation:spin 6s linear infinite;
 }
 
-.circle::after{
-    content:'';
+.chakra::before{
+    content:"";
     position:absolute;
-    inset:20px;
-    border:2px dashed #00ff99;
-    border-radius:50%;
+    inset:50%;
+    width:2px;
+    height:70px;
+    background:#0a3d91;
+    transform-origin:bottom;
+    transform:translate(-50%,-100%);
 }
 
 @keyframes spin{
-    from{transform:translate(-50%,-50%) rotate(0deg);}
-    to{transform:translate(-50%,-50%) rotate(360deg);}
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
 }
 
-/* CONSOLE */
-#console{
-    position:absolute;
-    bottom:20px;
-    left:20px;
-    width:90%;
-    max-width:500px;
-    height:180px;
-    border:2px solid #00ff99;
-    padding:10px;
-    background:rgba(0,0,0,0.6);
-    overflow:hidden;
-    font-size:14px;
+#intro h1{
+    margin-top:30px;
+    letter-spacing:3px;
+    text-align:center;
 }
 
-/* SCAN LINE */
-.scan{
-    position:absolute;
+/* ---------- BACKGROUND ---------- */
+#bg{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(120deg,#ff9933,#ffffff,#138808);
+    background-size:400% 400%;
+    animation:bgMove 15s infinite;
+    z-index:-1;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* ---------- NAV ---------- */
+nav{
+    position:fixed;
+    top:0;
     width:100%;
-    height:3px;
-    background:#00ff99;
-    top:-10px;
-    animation:scan 3s linear infinite;
+    background:rgba(0,0,0,0.75);
+    padding:15px;
+    text-align:center;
+    z-index:1000;
 }
 
-@keyframes scan{
-    from{top:-10px;}
-    to{top:100%;}
+nav a{
+    color:#fff;
+    margin:0 12px;
+    text-decoration:none;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+nav a:hover{
+    color:#ff9933;
+}
+
+/* ---------- SECTIONS ---------- */
+section{
+    min-height:100vh;
+    padding:110px 20px;
+    text-align:center;
+}
+
+h2{
+    font-size:38px;
+    margin-bottom:20px;
+    text-shadow:2px 2px 5px #000;
+}
+
+.card{
+    max-width:1100px;
+    margin:25px auto;
+    background:rgba(0,0,0,0.6);
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 0 25px rgba(0,0,0,0.6);
+}
+
+p{
+    font-size:19px;
+    line-height:1.9;
+}
+
+img{
+    width:260px;
+    border-radius:50%;
+    margin:25px 0;
+    box-shadow:0 0 25px rgba(0,0,0,0.7);
+}
+
+/* ---------- TIMELINE ---------- */
+.timeline{
+    text-align:left;
+}
+
+.timeline div{
+    padding:12px;
+    border-left:4px solid #ff9933;
+    margin:15px 0;
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+    background:#000;
+    padding:25px;
+    text-align:center;
+    font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- PAGE 1 -->
-<div id="login">
-    <h1>SECURE ACCESS</h1>
-    <input id="nameInput" placeholder="ENTER NAME" autofocus>
-    <div id="warning"></div>
+<!-- INTRO -->
+<div id="intro">
+    <div class="chakra"></div>
+    <h1>MAHATMA GANDHI<br>SOUL OF INDIA</h1>
 </div>
 
-<!-- PAGE 2 -->
-<div id="system">
-    <canvas id="matrix"></canvas>
+<div id="bg"></div>
 
-    <div class="hud">
-        <div class="circle"></div>
-        <div class="scan"></div>
+<!-- MUSIC -->
+<audio autoplay loop>
+    <source src="patriotic.mp3" type="audio/mpeg">
+</audio>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#biography">Biography</a>
+    <a href="#journey">Journey</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#slogans">Slogans</a>
+    <a href="#philosophy">Philosophy</a>
+    <a href="#sources">Bibliography</a>
+</nav>
+
+<section id="home">
+    <h2>Father of the Nation</h2>
+    <img src="gandhi.png">
+    <div class="card">
+        <p>
+        Mahatma Gandhi was not just a leader, but a living conscience of humanity.
+        He proved that truth and non-violence are stronger than empires.
+        His life was a message, and his message became a movement.
+        </p>
     </div>
+</section>
 
-    <div id="console"></div>
-</div>
+<section id="biography">
+    <h2>Early Life</h2>
+    <div class="card">
+        <p>
+        Mohandas Karamchand Gandhi was born on 2 October 1869 in Porbandar, Gujarat.
+        Raised in a deeply spiritual environment, Gandhi learned values of honesty,
+        discipline, and compassion from his mother Putlibai.
+        He married Kasturba Gandhi at a young age and later studied law in London.
+        </p>
+    </div>
+</section>
 
-<script>
-/* ---------- LOGIN LOGIC ---------- */
-let attempts = 2;
+<section id="journey">
+    <h2>Freedom Struggle</h2>
+    <div class="card">
+        <p>
+        Gandhi’s struggle began in South Africa, where racial injustice awakened his mission.
+        Returning to India, he led the masses through non-violent resistance.
+        Movements like Non-Cooperation, Salt March, and Quit India reshaped history.
+        India finally gained independence on 15 August 1947.
+        </p>
+    </div>
+</section>
 
-document.getElementById("nameInput").addEventListener("keydown", e=>{
-    if(e.key==="Enter"){
-        const name = e.target.value.trim().toUpperCase();
-        if(name==="AAYUSHMAN"){
-            document.getElementById("login").style.display="none";
-            document.getElementById("system").style.display="block";
-            startMatrix();
-            startConsole();
-            startVoice();
-            startMusic();
-        }else{
-            attempts--;
-            document.getElementById("warning").innerHTML =
-              "⚠ ACCESS DENIED<br>"+attempts+" ATTEMPTS LEFT";
-            if(attempts<=0){
-                document.getElementById("warning").innerHTML="SYSTEM LOCKED";
-            }
-        }
-    }
-});
+<section id="timeline">
+    <h2>Historic Timeline</h2>
+    <div class="card timeline">
+        <div><b>1869:</b> Birth in Porbandar</div>
+        <div><b>1893:</b> South Africa journey</div>
+        <div><b>1915:</b> Return to India</div>
+        <div><b>1930:</b> Dandi March</div>
+        <div><b>1942:</b> Quit India Movement</div>
+        <div><b>1947:</b> Independence</div>
+        <div><b>1948:</b> Martyrdom</div>
+    </div>
+</section>
 
-/* ---------- MATRIX ---------- */
-function startMatrix(){
-    const c=document.getElementById("matrix");
-    const ctx=c.getContext("2d");
-    c.width=innerWidth;
-    c.height=innerHeight;
-    const letters="1010101010ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const font=16;
-    const cols=c.width/font;
-    const drops=Array(Math.floor(cols)).fill(1);
+<section id="slogans">
+    <h2>Words That Changed the World</h2>
+    <div class="card">
+        <p>
+        “Be the change that you wish to see in the world.”<br><br>
+        “Truth is God.”<br><br>
+        “An eye for an eye makes the whole world blind.”
+        </p>
+    </div>
+</section>
 
-    setInterval(()=>{
-        ctx.fillStyle="rgba(0,0,0,0.1)";
-        ctx.fillRect(0,0,c.width,c.height);
-        ctx.fillStyle="#00ff99";
-        ctx.font=font+"px monospace";
-        for(let i=0;i<drops.length;i++){
-            const text=letters[Math.floor(Math.random()*letters.length)];
-            ctx.fillText(text,i*font,drops[i]*font);
-            if(drops[i]*font>c.height && Math.random()>0.975) drops[i]=0;
-            drops[i]++;
-        }
-    },33);
-}
+<section id="philosophy">
+    <h2>Gandhian Philosophy</h2>
+    <div class="card">
+        <p>
+        Gandhi believed in Ahimsa, Satya, self-reliance, and unity.
+        His philosophy teaches humanity that peace is not weakness,
+        but the highest form of strength.
+        </p>
+    </div>
+</section>
 
-/* ---------- CONSOLE TYPING ---------- */
-function startConsole(){
-    const box=document.getElementById("console");
-    const lines=[
-        "Initializing AI core...",
-        "Decrypting secure layers...",
-        "Neural interface online...",
-        "System authenticated.",
-        "Welcome back AAYUSHMAN.",
-        "Let's complete the work."
-    ];
-    let i=0,j=0;
-    setInterval(()=>{
-        if(i<lines.length){
-            if(j<lines[i].length){
-                box.innerHTML+=lines[i][j++];
-            }else{
-                box.innerHTML+="<br>";
-                i++;j=0;
-            }
-            box.scrollTop=box.scrollHeight;
-        }
-    },40);
-}
+<section id="sources">
+    <h2>Bibliography</h2>
+    <div class="card">
+        <p>
+        • The Story of My Experiments with Truth<br>
+        • Collected Works of Mahatma Gandhi<br>
+        • National Gandhi Museum<br>
+        • NCERT & Government Archives
+        </p>
+    </div>
+</section>
 
-/* ---------- JARVIS VOICE ---------- */
-function startVoice(){
-    const msg=new SpeechSynthesisUtterance(
-      "Welcome back Aayushman. Let's complete the work."
-    );
-    msg.rate=1.3;      // faster robotic
-    msg.pitch=0.6;     // deep AI
-    msg.lang="en-US";
-    speechSynthesis.speak(msg);
-}
-
-/* ---------- BACKGROUND MUSIC ---------- */
-function startMusic(){
-    const ctx=new (window.AudioContext||window.webkitAudioContext)();
-    const osc=ctx.createOscillator();
-    const gain=ctx.createGain();
-    osc.type="sawtooth";
-    osc.frequency.value=60;
-    gain.gain.value=0.05;
-    osc.connect(gain).connect(ctx.destination);
-    osc.start();
-}
-</script>
+<footer>
+    🇮🇳 A Professional Patriotic Project | Tribute to Mahatma Gandhi 🔥BY AAYUSHMAN🔥🇮🇳
+</footer>
 
 </body>
 </html>
