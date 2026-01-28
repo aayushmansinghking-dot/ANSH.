@@ -7,185 +7,171 @@
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: "Georgia", serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Georgia, serif;
 }
 
-html{
-    scroll-behavior:smooth;
-}
+html{ scroll-behavior:smooth; }
 
 body{
-    color:#fff;
-    overflow-x:hidden;
+  color:#fff;
+  overflow-x:hidden;
 }
 
-/* ===== BACKGROUND WITH PATRIOTIC IMAGE FEEL ===== */
+/* ===== BACKGROUND IMAGES (LOCAL FILES ONLY) ===== */
 #bg{
-    position:fixed;
-    inset:0;
-    background:
-      linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.8)),
-      url("https://images.unsplash.com/photo-1600195077070-7a6c9f1b52c3");
-    background-size:cover;
-    background-position:center;
-    animation:slowZoom 25s infinite alternate;
-    z-index:-2;
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)),
+    url("bg1.jpg"),
+    url("bg2.jpg");
+  background-size:cover;
+  background-position:center;
+  animation:bgZoom 30s infinite alternate;
+  z-index:-2;
 }
 
-@keyframes slowZoom{
-    from{transform:scale(1);}
-    to{transform:scale(1.1);}
+@keyframes bgZoom{
+  from{transform:scale(1);}
+  to{transform:scale(1.1);}
 }
 
 /* ===== INTRO SCREEN ===== */
 #intro{
-    position:fixed;
-    inset:0;
-    background:radial-gradient(circle,#000,#111);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    z-index:9999;
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  z-index:9999;
 }
 
 .chakra{
-    width:160px;
-    height:160px;
-    border:8px solid #0a3d91;
-    border-radius:50%;
-    animation:spin 6s linear infinite;
-    margin-bottom:25px;
+  width:160px;
+  height:160px;
+  border:8px solid #0a3d91;
+  border-radius:50%;
+  animation:spin 6s linear infinite;
+  margin-bottom:25px;
 }
 
 @keyframes spin{
-    from{transform:rotate(0deg);}
-    to{transform:rotate(360deg);}
-}
-
-#intro h1{
-    letter-spacing:3px;
-    margin-bottom:15px;
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
 }
 
 #enterBtn{
-    padding:14px 40px;
-    font-size:18px;
-    border:none;
-    border-radius:30px;
-    cursor:pointer;
-    background:#ff9933;
-    font-weight:bold;
-    box-shadow:0 0 20px rgba(255,153,51,0.9);
+  margin-top:20px;
+  padding:14px 40px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  background:#ff9933;
+  color:#000;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-#enterBtn:hover{
-    background:#fff;
-}
-
-/* ===== NAVBAR ===== */
+/* ===== NAV ===== */
 nav{
-    position:fixed;
-    top:0;
-    width:100%;
-    background:rgba(0,0,0,0.85);
-    padding:15px;
-    text-align:center;
-    z-index:1000;
+  position:fixed;
+  top:0;
+  width:100%;
+  background:rgba(0,0,0,0.85);
+  padding:15px;
+  text-align:center;
+  z-index:1000;
 }
 
 nav a{
-    color:#fff;
-    margin:0 12px;
-    text-decoration:none;
-    font-weight:bold;
+  color:#fff;
+  margin:0 12px;
+  text-decoration:none;
+  font-weight:bold;
 }
 
-nav a:hover{
-    color:#ff9933;
-}
+nav a:hover{ color:#ff9933; }
 
 /* ===== SECTIONS ===== */
 section{
-    min-height:100vh;
-    padding:120px 20px 80px;
-    text-align:center;
+  min-height:100vh;
+  padding:120px 20px 80px;
+  text-align:center;
 }
 
 h2{
-    font-size:38px;
-    margin-bottom:20px;
-    text-shadow:2px 2px 5px #000;
+  font-size:38px;
+  margin-bottom:20px;
 }
 
 .card{
-    max-width:1100px;
-    margin:25px auto;
-    background:rgba(0,0,0,0.65);
-    padding:30px;
-    border-radius:18px;
-    box-shadow:0 0 25px rgba(0,0,0,0.6);
+  max-width:1100px;
+  margin:25px auto;
+  background:rgba(0,0,0,0.65);
+  padding:30px;
+  border-radius:18px;
 }
 
 p{
-    font-size:19px;
-    line-height:1.9;
+  font-size:19px;
+  line-height:1.9;
 }
 
-/* ===== IMAGE ===== */
+/* ===== GANDHI IMAGE ===== */
 .gandhi-img{
-    width:260px;
-    border-radius:50%;
-    margin:25px 0;
-    box-shadow:0 0 30px rgba(0,0,0,0.8);
+  width:260px;
+  border-radius:50%;
+  margin:25px 0;
+  box-shadow:0 0 30px rgba(0,0,0,0.8);
 }
 
 /* ===== TIMELINE ===== */
 .timeline{
-    text-align:left;
+  text-align:left;
 }
 
 .timeline div{
-    border-left:4px solid #ff9933;
-    padding:12px 15px;
-    margin:15px 0;
+  border-left:4px solid #ff9933;
+  padding:12px 15px;
+  margin:15px 0;
 }
 
 /* ===== AUDIO CONTROLS ===== */
 #audioControls{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:rgba(0,0,0,0.85);
-    padding:15px;
-    border-radius:15px;
-    box-shadow:0 0 20px rgba(0,0,0,0.6);
-    z-index:1000;
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:rgba(0,0,0,0.9);
+  padding:15px;
+  border-radius:15px;
+  display:none;
+  z-index:1000;
 }
 
 #audioControls button{
-    padding:6px 14px;
-    border:none;
-    border-radius:20px;
-    background:#ff9933;
-    font-weight:bold;
-    cursor:pointer;
+  padding:6px 14px;
+  border:none;
+  border-radius:20px;
+  background:#ff9933;
+  font-weight:bold;
+  cursor:pointer;
 }
 
 #audioControls input{
-    width:120px;
+  width:120px;
 }
 
 /* ===== FOOTER ===== */
 footer{
-    background:#000;
-    padding:25px;
-    text-align:center;
-    font-size:14px;
+  background:#000;
+  padding:25px;
+  text-align:center;
 }
 </style>
 </head>
@@ -196,141 +182,136 @@ footer{
 
 <!-- INTRO -->
 <div id="intro">
-    <div class="chakra"></div>
-    <h1>MAHATMA GANDHI</h1>
-    <p>Father of the Nation – India</p><br>
-    <button id="enterBtn">ENTER TRIBUTE</button>
+  <div class="chakra"></div>
+  <h1>MAHATMA GANDHI</h1>
+  <p>Father of the Nation – India</p>
+  <button id="enterBtn">ENTER</button>
 </div>
 
 <!-- AUDIO -->
-<audio id="bgMusic" loop>
-    <source src="patriotic.mp3" type="audio/mpeg">
+<audio id="bgMusic" loop preload="auto">
+  <source src="patriotic.mp3" type="audio/mpeg">
 </audio>
 
 <!-- AUDIO CONTROLS -->
-<div id="audioControls" style="display:none;">
-    <button id="muteBtn">Mute</button><br><br>
-    <input type="range" min="0" max="1" step="0.01" value="0.5" id="volumeSlider">
+<div id="audioControls">
+  <button id="muteBtn">Mute</button><br><br>
+  <input type="range" min="0" max="1" step="0.01" value="0.6" id="volumeSlider">
 </div>
 
 <nav>
-    <a href="#home">Home</a>
-    <a href="#bio">Biography</a>
-    <a href="#freedom">Freedom Struggle</a>
-    <a href="#timeline">Timeline</a>
-    <a href="#quotes">Slogans</a>
-    <a href="#values">Values</a>
-    <a href="#sources">Bibliography</a>
+  <a href="#home">Home</a>
+  <a href="#bio">Biography</a>
+  <a href="#freedom">Freedom</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#quotes">Slogans</a>
+  <a href="#values">Values</a>
 </nav>
 
 <section id="home">
-    <h2>Father of the Nation</h2>
-    <img src="gandhi.png" class="gandhi-img" onerror="this.src='gandhi.jpg'">
-    <div class="card">
-        <p>
-        Mahatma Gandhi was the moral backbone of India’s freedom struggle.
-        He transformed political resistance into a mass movement based on
-        truth, courage, and non-violence. His life itself became his message.
-        </p>
-    </div>
+  <h2>Father of the Nation</h2>
+  <img src="gandhi.png" class="gandhi-img" onerror="this.src='gandhi.jpg'">
+  <div class="card">
+    <p>
+      Mahatma Gandhi led India’s freedom struggle through truth and non-violence.
+      His life proved that moral power is stronger than weapons.
+    </p>
+  </div>
 </section>
 
 <section id="bio">
-    <h2>Early Life & Education</h2>
-    <div class="card">
-        <p>
-        Mohandas Karamchand Gandhi was born on 2 October 1869 in Porbandar, Gujarat.
-        Raised in a spiritual household, he learned discipline and honesty early in life.
-        He studied law in London and later worked in South Africa, where injustice shaped
-        his philosophy of Satyagraha.
-        </p>
-    </div>
+  <h2>Early Life</h2>
+  <div class="card">
+    <p>
+      Born on 2 October 1869 in Porbandar, Gandhi grew up with strong values.
+      He studied law in London and later faced racial injustice in South Africa,
+      shaping his philosophy of Satyagraha.
+    </p>
+  </div>
 </section>
 
 <section id="freedom">
-    <h2>Role in Freedom Movement</h2>
-    <div class="card">
-        <p>
-        Gandhi led India through non-violent resistance movements like the
-        Non-Cooperation Movement, Dandi March, and Quit India Movement.
-        He united millions and proved that moral strength can defeat oppression.
-        </p>
-    </div>
+  <h2>Freedom Struggle</h2>
+  <div class="card">
+    <p>
+      Gandhi led movements like Non-Cooperation, Dandi March, and Quit India.
+      He united millions without violence and changed world history.
+    </p>
+  </div>
 </section>
 
 <section id="timeline">
-    <h2>Historic Timeline</h2>
-    <div class="card timeline">
-        <div><b>1869</b> – Birth in Porbandar</div>
-        <div><b>1893</b> – South Africa struggle</div>
-        <div><b>1915</b> – Return to India</div>
-        <div><b>1930</b> – Dandi March</div>
-        <div><b>1942</b> – Quit India Movement</div>
-        <div><b>1947</b> – Independence</div>
-        <div><b>1948</b> – Martyrdom</div>
-    </div>
+  <h2>Historic Timeline</h2>
+  <div class="card timeline">
+    <div>1869 – Birth</div>
+    <div>1893 – South Africa</div>
+    <div>1915 – Return to India</div>
+    <div>1930 – Dandi March</div>
+    <div>1942 – Quit India</div>
+    <div>1947 – Independence</div>
+    <div>1948 – Martyrdom</div>
+  </div>
 </section>
 
 <section id="quotes">
-    <h2>Famous Slogans & Quotes</h2>
-    <div class="card">
-        <p>
-        “Be the change that you wish to see in the world.”<br><br>
-        “Truth is God.”<br><br>
-        “An eye for an eye makes the whole world blind.”
-        </p>
-    </div>
+  <h2>Famous Quotes</h2>
+  <div class="card">
+    <p>
+      “Be the change you wish to see.”<br><br>
+      “Truth is God.”<br><br>
+      “An eye for an eye makes the whole world blind.”
+    </p>
+  </div>
 </section>
 
 <section id="values">
-    <h2>Gandhian Values</h2>
-    <div class="card">
-        <p>
-        Gandhi believed in Ahimsa (Non-Violence), Satya (Truth),
-        self-reliance, simplicity, and unity. His philosophy continues
-        to guide humanity toward peace and justice.
-        </p>
-    </div>
-</section>
-
-<section id="sources">
-    <h2>Bibliography</h2>
-    <div class="card">
-        <p>
-        • The Story of My Experiments with Truth<br>
-        • Collected Works of Mahatma Gandhi<br>
-        • National Gandhi Museum<br>
-        • NCERT & Government Archives
-        </p>
-    </div>
+  <h2>Gandhian Values</h2>
+  <div class="card">
+    <p>
+      Ahimsa, Truth, Simplicity, Self-discipline and Unity —
+      values that still guide humanity.
+    </p>
+  </div>
 </section>
 
 <footer>
-    🇮🇳 Professional Patriotic Project – Tribute to Mahatma Gandhi 🇮🇳 🔥🔥BY AAYUSHMAN SINGH🔥🔥
+  🇮🇳 Tribute to Mahatma Gandhi 🇮🇳
 </footer>
 
 <script>
-const enterBtn = document.getElementById("enterBtn");
-const intro = document.getElementById("intro");
 const music = document.getElementById("bgMusic");
-const audioControls = document.getElementById("audioControls");
+const intro = document.getElementById("intro");
+const enterBtn = document.getElementById("enterBtn");
 const muteBtn = document.getElementById("muteBtn");
 const volumeSlider = document.getElementById("volumeSlider");
+const audioControls = document.getElementById("audioControls");
+
+let started = false;
+
+// MOST RELIABLE MOBILE METHOD
+function startMusic(){
+  if(started) return;
+  music.volume = 0.6;
+  music.play().then(()=>{
+    started = true;
+    audioControls.style.display = "block";
+  }).catch(()=>{});
+}
+
+document.addEventListener("click", startMusic, { once:true });
+document.addEventListener("touchstart", startMusic, { once:true });
 
 enterBtn.addEventListener("click", ()=>{
-    music.volume = 0.5;
-    music.play();
-    intro.style.display = "none";
-    audioControls.style.display = "block";
+  intro.style.display = "none";
 });
 
 muteBtn.addEventListener("click", ()=>{
-    music.muted = !music.muted;
-    muteBtn.textContent = music.muted ? "Unmute" : "Mute";
+  music.muted = !music.muted;
+  muteBtn.textContent = music.muted ? "Unmute" : "Mute";
 });
 
 volumeSlider.addEventListener("input", ()=>{
-    music.volume = volumeSlider.value;
+  music.volume = volumeSlider.value;
 });
 </script>
 
