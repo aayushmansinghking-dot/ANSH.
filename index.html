@@ -10,14 +10,13 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family: "Segoe UI", sans-serif;
+    font-family:'Segoe UI',sans-serif;
 }
 
 body{
-    background: linear-gradient(120deg, #ff9933, #ffffff, #138808);
-    background-size: 400% 400%;
-    animation: bgMove 15s ease infinite;
-    color:#111;
+    background:linear-gradient(120deg,#ff9933,#ffffff,#138808);
+    background-size:400% 400%;
+    animation:bgMove 12s ease infinite;
     overflow-x:hidden;
 }
 
@@ -27,38 +26,65 @@ body{
     100%{background-position:0% 50%;}
 }
 
+/* INTRO SCREEN */
+#intro{
+    position:fixed;
+    inset:0;
+    background:#000;
+    color:#0f0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:9999;
+    text-align:center;
+}
+
+#intro h1{
+    font-size:2.5em;
+    margin-bottom:20px;
+}
+
+#intro p{
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0;}
+}
+
+/* HEADER */
 header{
     text-align:center;
-    padding:40px 20px;
-    color:#000;
+    padding:40px 15px;
 }
 
 header h1{
     font-size:3em;
-    animation: fadeIn 2s ease;
 }
 
 header p{
     font-size:1.2em;
 }
 
+/* NAV */
 nav{
     display:flex;
     justify-content:center;
-    gap:20px;
+    gap:15px;
     flex-wrap:wrap;
     margin-bottom:30px;
 }
 
 nav button{
-    padding:12px 20px;
+    padding:12px 22px;
     border:none;
+    border-radius:30px;
     background:#000;
     color:#fff;
-    border-radius:30px;
-    cursor:pointer;
     font-size:16px;
-    transition:0.3s;
+    cursor:pointer;
+    transition:.3s;
 }
 
 nav button:hover{
@@ -66,49 +92,59 @@ nav button:hover{
     transform:scale(1.1);
 }
 
+/* SECTIONS */
 section{
     display:none;
-    padding:30px;
     max-width:1100px;
     margin:auto;
-    animation: fadeIn 1.5s ease;
+    padding:25px;
+    animation:fade 1.2s ease;
 }
 
 section.active{
     display:block;
 }
 
-@keyframes fadeIn{
+@keyframes fade{
     from{opacity:0; transform:translateY(20px);}
     to{opacity:1; transform:translateY(0);}
 }
 
-.home-img{
+.card{
+    background:rgba(255,255,255,.95);
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 15px 30px rgba(0,0,0,.2);
+    margin-bottom:25px;
+}
+
+/* IMAGE */
+.center-img{
     display:flex;
     justify-content:center;
     margin:20px 0;
 }
 
-.home-img img{
+.center-img img{
     width:260px;
     border-radius:50%;
-    box-shadow:0 0 30px rgba(0,0,0,0.4);
-    animation: float 4s ease-in-out infinite;
+    animation:float 4s ease-in-out infinite;
+    box-shadow:0 0 25px rgba(0,0,0,.4);
 }
 
 @keyframes float{
-    0%,100%{transform:translateY(0);}
     50%{transform:translateY(-15px);}
 }
 
+/* MUSIC BUTTON */
 .music-btn{
     display:block;
-    margin:20px auto;
-    padding:14px 30px;
+    margin:25px auto;
+    padding:14px 35px;
     font-size:18px;
-    background:#ff9933;
     border:none;
     border-radius:40px;
+    background:#ff9933;
     cursor:pointer;
 }
 
@@ -117,25 +153,14 @@ section.active{
     color:#fff;
 }
 
-.card{
-    background:rgba(255,255,255,0.9);
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
-    margin-bottom:25px;
-}
-
+/* TABLE */
 table{
     width:100%;
     border-collapse:collapse;
-    margin-top:20px;
 }
 
-table, th, td{
+th,td{
     border:1px solid #000;
-}
-
-th, td{
     padding:12px;
     text-align:center;
 }
@@ -144,14 +169,15 @@ th{
     background:#ff9933;
 }
 
+/* WAVE */
 .wave{
     position:fixed;
     bottom:0;
     left:0;
     width:100%;
     height:120px;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23000000' fill-opacity='0.2' d='M0,224L48,197.3C96,171,192,117,288,117.3C384,117,480,171,576,186.7C672,203,768,181,864,160C960,139,1056,117,1152,112C1248,107,1344,117,1392,122.7L1440,128L1440,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
-    animation: waveMove 8s linear infinite;
+    background:url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23000000' fill-opacity='0.25' d='M0,224L60,213C120,203,240,181,360,186.7C480,192,600,224,720,224C840,224,960,192,1080,176C1200,160,1320,160,1380,160L1440,160L1440,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+    animation:waveMove 10s linear infinite;
 }
 
 @keyframes waveMove{
@@ -161,7 +187,7 @@ th{
 
 footer{
     text-align:center;
-    padding:20px;
+    padding:25px;
     font-weight:bold;
 }
 </style>
@@ -169,83 +195,73 @@ footer{
 
 <body>
 
+<!-- INTRO -->
+<div id="intro">
+<h1>Initializing Patriotic Experience</h1>
+<p>Press ENTER to Continue</p>
+</div>
+
 <header>
 <h1>Mahatma Gandhi</h1>
 <p>Father of the Nation – India 🇮🇳</p>
 </header>
 
 <nav>
-<button onclick="showPage('home')">Home</button>
-<button onclick="showPage('bio')">Biography</button>
-<button onclick="showPage('details')">Details</button>
-<button onclick="showPage('timeline')">Timeline</button>
+<button onclick="openPage('home')">Home</button>
+<button onclick="openPage('bio')">Biography</button>
+<button onclick="openPage('details')">Details</button>
+<button onclick="openPage('timeline')">Timeline</button>
 </nav>
 
-<!-- HOME -->
 <section id="home" class="active">
 <div class="card">
-<h2>Welcome</h2>
-<p>Mahatma Gandhi, also known as Mohandas Karamchand Gandhi, was the leader of India’s freedom struggle and the pioneer of non-violence and truth.</p>
+<h2 id="type"></h2>
+<p>Mahatma Gandhi led India to freedom through truth, sacrifice and non-violence.</p>
 </div>
 
-<div class="home-img">
+<div class="center-img">
 <img src="gandhi.jpg" alt="Mahatma Gandhi">
 </div>
 
-<button class="music-btn" onclick="toggleMusic()">🎵 Music</button>
+<button class="music-btn" onclick="toggleMusic()">🎵 Play / Pause Music</button>
 </section>
 
-<!-- BIOGRAPHY -->
 <section id="bio">
 <div class="card">
 <h2>Biography</h2>
-<p>
-Mahatma Gandhi was born on 2 October 1869 in Porbandar, Gujarat. His father, Karamchand Gandhi, was the Diwan of Porbandar, and his mother Putlibai was a deeply religious woman.
-</p>
-<p>
-Gandhi studied law in London and later went to South Africa, where he faced racial discrimination. This experience transformed him into a leader who believed in truth (Satya) and non-violence (Ahimsa).
-</p>
-<p>
-After returning to India, he led major movements like the Non-Cooperation Movement, Civil Disobedience Movement, and Quit India Movement. His simple lifestyle and moral strength inspired millions.
-</p>
+<p>Mohandas Karamchand Gandhi was born on 2 October 1869 in Porbandar, Gujarat. Influenced by his mother Putlibai, he grew into a disciplined and moral individual.</p>
+<p>After studying law in London, Gandhi went to South Africa where racial injustice transformed him into a leader of peaceful resistance.</p>
+<p>Returning to India, he became the soul of India’s freedom movement using non-violence as a weapon.</p>
 </div>
 </section>
 
-<!-- DETAILS -->
 <section id="details">
 <div class="card">
 <h2>Personal Details</h2>
 <ul>
-<li><b>Full Name:</b> Mohandas Karamchand Gandhi</li>
 <li><b>Born:</b> 2 October 1869</li>
-<li><b>Birth Place:</b> Porbandar, Gujarat</li>
 <li><b>Parents:</b> Karamchand Gandhi & Putlibai</li>
 <li><b>Wife:</b> Kasturba Gandhi</li>
-<li><b>Profession:</b> Lawyer, Freedom Fighter</li>
-<li><b>Principles:</b> Truth & Non-Violence</li>
+<li><b>Profession:</b> Lawyer, Leader</li>
+<li><b>Ideology:</b> Truth & Non-Violence</li>
 <li><b>Died:</b> 30 January 1948</li>
 </ul>
 </div>
 </section>
 
-<!-- TIMELINE -->
 <section id="timeline">
 <div class="card">
-<h2>Timeline (Birth to Death)</h2>
+<h2>Timeline</h2>
 <table>
-<tr>
-<th>Year</th>
-<th>Event</th>
-</tr>
-<tr><td>1869</td><td>Born in Porbandar</td></tr>
-<tr><td>1888</td><td>Went to London to study Law</td></tr>
-<tr><td>1893</td><td>Went to South Africa</td></tr>
-<tr><td>1915</td><td>Returned to India</td></tr>
-<tr><td>1920</td><td>Non-Cooperation Movement</td></tr>
+<tr><th>Year</th><th>Event</th></tr>
+<tr><td>1869</td><td>Born</td></tr>
+<tr><td>1893</td><td>South Africa Struggle</td></tr>
+<tr><td>1915</td><td>Return to India</td></tr>
+<tr><td>1920</td><td>Non-Cooperation</td></tr>
 <tr><td>1930</td><td>Dandi March</td></tr>
-<tr><td>1942</td><td>Quit India Movement</td></tr>
-<tr><td>1947</td><td>India became Independent</td></tr>
-<tr><td>1948</td><td>Assassinated in Delhi</td></tr>
+<tr><td>1942</td><td>Quit India</td></tr>
+<tr><td>1947</td><td>Independence</td></tr>
+<tr><td>1948</td><td>Martyrdom</td></tr>
 </table>
 </div>
 </section>
@@ -256,30 +272,43 @@ Made with 🇮🇳 by Aayushman Singh
 
 <div class="wave"></div>
 
-<audio id="bgMusic" loop>
+<audio id="music" loop>
 <source src="patriotic.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-function showPage(id){
-    document.querySelectorAll("section").forEach(sec=>{
-        sec.classList.remove("active");
-    });
+let music=document.getElementById("music");
+let playing=false;
+
+function toggleMusic(){
+    music.play();
+    playing=true;
+}
+
+function openPage(id){
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
     document.getElementById(id).classList.add("active");
 }
 
-let music = document.getElementById("bgMusic");
-let playing = false;
+/* ENTER KEY FIX */
+document.addEventListener("keydown",e=>{
+    if(e.key==="Enter"){
+        document.getElementById("intro").style.display="none";
+        music.play(); // music unlocks here
+    }
+});
 
-function toggleMusic(){
-    if(!playing){
-        music.play();
-        playing = true;
-    }else{
-        music.pause();
-        playing = false;
+/* TYPEWRITER */
+let text="Welcome to the Legacy of Mahatma Gandhi";
+let i=0;
+function type(){
+    if(i<text.length){
+        document.getElementById("type").innerHTML+=text.charAt(i);
+        i++;
+        setTimeout(type,70);
     }
 }
+type();
 </script>
 
 </body>
