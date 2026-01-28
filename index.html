@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Mahatma Gandhi – Soul of India</title>
+<title>Mahatma Gandhi – Father of the Nation</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -10,32 +10,47 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family: 'Georgia', serif;
+    font-family: "Georgia", serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    overflow-x:hidden;
-    background:#000;
     color:#fff;
+    overflow-x:hidden;
 }
 
-/* ---------- INTRO SCREEN ---------- */
+/* ===== BACKGROUND WITH PATRIOTIC IMAGE FEEL ===== */
+#bg{
+    position:fixed;
+    inset:0;
+    background:
+      linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.8)),
+      url("https://images.unsplash.com/photo-1600195077070-7a6c9f1b52c3");
+    background-size:cover;
+    background-position:center;
+    animation:slowZoom 25s infinite alternate;
+    z-index:-2;
+}
+
+@keyframes slowZoom{
+    from{transform:scale(1);}
+    to{transform:scale(1.1);}
+}
+
+/* ===== INTRO SCREEN ===== */
 #intro{
     position:fixed;
     inset:0;
-    background:radial-gradient(circle,#000,#111,#000);
+    background:radial-gradient(circle,#000,#111);
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
-    flex-direction:column;
+    text-align:center;
     z-index:9999;
-    animation:introFade 6s forwards;
-}
-
-@keyframes introFade{
-    0%{opacity:1;}
-    80%{opacity:1;}
-    100%{opacity:0; visibility:hidden;}
 }
 
 .chakra{
@@ -43,19 +58,8 @@ body{
     height:160px;
     border:8px solid #0a3d91;
     border-radius:50%;
-    position:relative;
     animation:spin 6s linear infinite;
-}
-
-.chakra::before{
-    content:"";
-    position:absolute;
-    inset:50%;
-    width:2px;
-    height:70px;
-    background:#0a3d91;
-    transform-origin:bottom;
-    transform:translate(-50%,-100%);
+    margin-bottom:25px;
 }
 
 @keyframes spin{
@@ -64,33 +68,31 @@ body{
 }
 
 #intro h1{
-    margin-top:30px;
     letter-spacing:3px;
-    text-align:center;
+    margin-bottom:15px;
 }
 
-/* ---------- BACKGROUND ---------- */
-#bg{
-    position:fixed;
-    inset:0;
-    background:linear-gradient(120deg,#ff9933,#ffffff,#138808);
-    background-size:400% 400%;
-    animation:bgMove 15s infinite;
-    z-index:-1;
+#enterBtn{
+    padding:14px 40px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    background:#ff9933;
+    font-weight:bold;
+    box-shadow:0 0 20px rgba(255,153,51,0.9);
 }
 
-@keyframes bgMove{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+#enterBtn:hover{
+    background:#fff;
 }
 
-/* ---------- NAV ---------- */
+/* ===== NAVBAR ===== */
 nav{
     position:fixed;
     top:0;
     width:100%;
-    background:rgba(0,0,0,0.75);
+    background:rgba(0,0,0,0.85);
     padding:15px;
     text-align:center;
     z-index:1000;
@@ -101,17 +103,16 @@ nav a{
     margin:0 12px;
     text-decoration:none;
     font-weight:bold;
-    letter-spacing:1px;
 }
 
 nav a:hover{
     color:#ff9933;
 }
 
-/* ---------- SECTIONS ---------- */
+/* ===== SECTIONS ===== */
 section{
     min-height:100vh;
-    padding:110px 20px;
+    padding:120px 20px 80px;
     text-align:center;
 }
 
@@ -124,7 +125,7 @@ h2{
 .card{
     max-width:1100px;
     margin:25px auto;
-    background:rgba(0,0,0,0.6);
+    background:rgba(0,0,0,0.65);
     padding:30px;
     border-radius:18px;
     box-shadow:0 0 25px rgba(0,0,0,0.6);
@@ -135,25 +136,51 @@ p{
     line-height:1.9;
 }
 
-img{
+/* ===== IMAGE ===== */
+.gandhi-img{
     width:260px;
     border-radius:50%;
     margin:25px 0;
-    box-shadow:0 0 25px rgba(0,0,0,0.7);
+    box-shadow:0 0 30px rgba(0,0,0,0.8);
 }
 
-/* ---------- TIMELINE ---------- */
+/* ===== TIMELINE ===== */
 .timeline{
     text-align:left;
 }
 
 .timeline div{
-    padding:12px;
     border-left:4px solid #ff9933;
+    padding:12px 15px;
     margin:15px 0;
 }
 
-/* ---------- FOOTER ---------- */
+/* ===== AUDIO CONTROLS ===== */
+#audioControls{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:rgba(0,0,0,0.85);
+    padding:15px;
+    border-radius:15px;
+    box-shadow:0 0 20px rgba(0,0,0,0.6);
+    z-index:1000;
+}
+
+#audioControls button{
+    padding:6px 14px;
+    border:none;
+    border-radius:20px;
+    background:#ff9933;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#audioControls input{
+    width:120px;
+}
+
+/* ===== FOOTER ===== */
 footer{
     background:#000;
     padding:25px;
@@ -165,61 +192,68 @@ footer{
 
 <body>
 
+<div id="bg"></div>
+
 <!-- INTRO -->
 <div id="intro">
     <div class="chakra"></div>
-    <h1>MAHATMA GANDHI<br>SOUL OF INDIA</h1>
+    <h1>MAHATMA GANDHI</h1>
+    <p>Father of the Nation – India</p><br>
+    <button id="enterBtn">ENTER TRIBUTE</button>
 </div>
 
-<div id="bg"></div>
-
-<!-- MUSIC -->
-<audio autoplay loop>
+<!-- AUDIO -->
+<audio id="bgMusic" loop>
     <source src="patriotic.mp3" type="audio/mpeg">
 </audio>
 
+<!-- AUDIO CONTROLS -->
+<div id="audioControls" style="display:none;">
+    <button id="muteBtn">Mute</button><br><br>
+    <input type="range" min="0" max="1" step="0.01" value="0.5" id="volumeSlider">
+</div>
+
 <nav>
     <a href="#home">Home</a>
-    <a href="#biography">Biography</a>
-    <a href="#journey">Journey</a>
+    <a href="#bio">Biography</a>
+    <a href="#freedom">Freedom Struggle</a>
     <a href="#timeline">Timeline</a>
-    <a href="#slogans">Slogans</a>
-    <a href="#philosophy">Philosophy</a>
+    <a href="#quotes">Slogans</a>
+    <a href="#values">Values</a>
     <a href="#sources">Bibliography</a>
 </nav>
 
 <section id="home">
     <h2>Father of the Nation</h2>
-    <img src="gandhi.png">
+    <img src="gandhi.png" class="gandhi-img" onerror="this.src='gandhi.jpg'">
     <div class="card">
         <p>
-        Mahatma Gandhi was not just a leader, but a living conscience of humanity.
-        He proved that truth and non-violence are stronger than empires.
-        His life was a message, and his message became a movement.
+        Mahatma Gandhi was the moral backbone of India’s freedom struggle.
+        He transformed political resistance into a mass movement based on
+        truth, courage, and non-violence. His life itself became his message.
         </p>
     </div>
 </section>
 
-<section id="biography">
-    <h2>Early Life</h2>
+<section id="bio">
+    <h2>Early Life & Education</h2>
     <div class="card">
         <p>
         Mohandas Karamchand Gandhi was born on 2 October 1869 in Porbandar, Gujarat.
-        Raised in a deeply spiritual environment, Gandhi learned values of honesty,
-        discipline, and compassion from his mother Putlibai.
-        He married Kasturba Gandhi at a young age and later studied law in London.
+        Raised in a spiritual household, he learned discipline and honesty early in life.
+        He studied law in London and later worked in South Africa, where injustice shaped
+        his philosophy of Satyagraha.
         </p>
     </div>
 </section>
 
-<section id="journey">
-    <h2>Freedom Struggle</h2>
+<section id="freedom">
+    <h2>Role in Freedom Movement</h2>
     <div class="card">
         <p>
-        Gandhi’s struggle began in South Africa, where racial injustice awakened his mission.
-        Returning to India, he led the masses through non-violent resistance.
-        Movements like Non-Cooperation, Salt March, and Quit India reshaped history.
-        India finally gained independence on 15 August 1947.
+        Gandhi led India through non-violent resistance movements like the
+        Non-Cooperation Movement, Dandi March, and Quit India Movement.
+        He united millions and proved that moral strength can defeat oppression.
         </p>
     </div>
 </section>
@@ -227,18 +261,18 @@ footer{
 <section id="timeline">
     <h2>Historic Timeline</h2>
     <div class="card timeline">
-        <div><b>1869:</b> Birth in Porbandar</div>
-        <div><b>1893:</b> South Africa journey</div>
-        <div><b>1915:</b> Return to India</div>
-        <div><b>1930:</b> Dandi March</div>
-        <div><b>1942:</b> Quit India Movement</div>
-        <div><b>1947:</b> Independence</div>
-        <div><b>1948:</b> Martyrdom</div>
+        <div><b>1869</b> – Birth in Porbandar</div>
+        <div><b>1893</b> – South Africa struggle</div>
+        <div><b>1915</b> – Return to India</div>
+        <div><b>1930</b> – Dandi March</div>
+        <div><b>1942</b> – Quit India Movement</div>
+        <div><b>1947</b> – Independence</div>
+        <div><b>1948</b> – Martyrdom</div>
     </div>
 </section>
 
-<section id="slogans">
-    <h2>Words That Changed the World</h2>
+<section id="quotes">
+    <h2>Famous Slogans & Quotes</h2>
     <div class="card">
         <p>
         “Be the change that you wish to see in the world.”<br><br>
@@ -248,13 +282,13 @@ footer{
     </div>
 </section>
 
-<section id="philosophy">
-    <h2>Gandhian Philosophy</h2>
+<section id="values">
+    <h2>Gandhian Values</h2>
     <div class="card">
         <p>
-        Gandhi believed in Ahimsa, Satya, self-reliance, and unity.
-        His philosophy teaches humanity that peace is not weakness,
-        but the highest form of strength.
+        Gandhi believed in Ahimsa (Non-Violence), Satya (Truth),
+        self-reliance, simplicity, and unity. His philosophy continues
+        to guide humanity toward peace and justice.
         </p>
     </div>
 </section>
@@ -272,8 +306,33 @@ footer{
 </section>
 
 <footer>
-    🇮🇳 A Professional Patriotic Project | Tribute to Mahatma Gandhi 🔥BY AAYUSHMAN🔥🇮🇳
+    🇮🇳 Professional Patriotic Project – Tribute to Mahatma Gandhi 🇮🇳 🔥🔥BY AAYUSHMAN SINGH🔥🔥
 </footer>
+
+<script>
+const enterBtn = document.getElementById("enterBtn");
+const intro = document.getElementById("intro");
+const music = document.getElementById("bgMusic");
+const audioControls = document.getElementById("audioControls");
+const muteBtn = document.getElementById("muteBtn");
+const volumeSlider = document.getElementById("volumeSlider");
+
+enterBtn.addEventListener("click", ()=>{
+    music.volume = 0.5;
+    music.play();
+    intro.style.display = "none";
+    audioControls.style.display = "block";
+});
+
+muteBtn.addEventListener("click", ()=>{
+    music.muted = !music.muted;
+    muteBtn.textContent = music.muted ? "Unmute" : "Mute";
+});
+
+volumeSlider.addEventListener("input", ()=>{
+    music.volume = volumeSlider.value;
+});
+</script>
 
 </body>
 </html>
